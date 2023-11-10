@@ -1,23 +1,31 @@
-const sectionOne = document.createElement("section");
-document.body.append(sectionOne);
+"use strict";
 
-for (let i = 0; i <= 5; i++) {
+const sectionOne = document.createElement("section");
+const sectionTwo = document.createElement("section");
+document.body.append(sectionOne, sectionTwo);
+
+// SECTION 1
+for (let i = 0; i < 5; i++) {
 	const row = document.createElement("p");
 	sectionOne.append(row);
 
-	row.textContent = "Rad " + i;
-
-	// row styling
+	row.textContent = "Rad " + (i + 1);
 
 	addStyling(row, [
 		`fontSize:1.${i}rem`,
 		`backgroundColor:hsl(${270 + i * 10}, 100%, 50%)`,
 		"textAlign:center",
+		"color:white",
 	]);
 }
 
-const sectionTwo = document.createElement("section");
-document.body.append(sectionTwo);
+// SECTION 2
+addStyling(sectionTwo, [
+	"border:1px solid black",
+	"padding:3rem",
+	"display:flex",
+	"justify-content:space-evenly",
+]);
 
 const alignments = ["left", "center", "right"];
 
@@ -34,14 +42,11 @@ const numbers = [
 	"tio",
 ];
 
-const specialNumbers = [4, 8, 3];
+const specialNumbers = [4, 8, "sex"];
 
-addStyling(sectionTwo, [
-	"border:1px solid black",
-	"padding:3rem",
-	"display:flex",
-	"justify-content:space-evenly",
-]);
+const bg = "deeppink";
+const col1 = "black";
+const col2 = "white";
 
 for (let i = 0; i < alignments.length; i++) {
 	const block = document.createElement("div");
@@ -49,35 +54,38 @@ for (let i = 0; i < alignments.length; i++) {
 
 	addStyling(block, [
 		`textAlign:${alignments[i]}`,
-		"backgroundColor:deeppink",
+		`backgroundColor:${bg}`,
 		"padding:1rem",
 	]);
 
-	for (let j = 0; j < 10; j++) {
-		let number = document.createElement("p");
+	for (let j = 0; j < numbers.length; j++) {
+		let row = document.createElement("p");
+
+		// reverse order in even block
 		if (i % 2) {
-			block.prepend(number);
+			block.prepend(row);
 		} else {
-			block.append(number);
+			block.append(row);
 		}
 
-		number.textContent = j;
+		row.textContent = j;
 
-		if (i == 2) {
-			number.textContent = numbers[j];
+		// spell numbers in last iteration
+		if (i == alignments.length - 1) {
+			row.textContent = numbers[j];
 		}
 
-		let even = j % 2;
+		let evenRow = j % 2;
 
-		let bgColCombo = [
-			`backgroundColor:${even ? "black" : "white"}`,
-			`color:${even ? "white" : "black"}`,
-		];
+		addStyling(row, [
+			"width:3rem",
+			"margin:0",
+			`backgroundColor:${evenRow ? col1 : col2}`,
+			`color:${evenRow ? col2 : col1}`,
+		]);
 
-		addStyling(number, ["width:3rem", "margin:0"].concat(bgColCombo));
-
-		if (j == specialNumbers[i]) {
-			addStyling(number, ["backgroundColor:deeppink"]);
+		if (row.textContent == specialNumbers[i]) {
+			addStyling(row, [`backgroundColor:${bg}`]);
 		}
 	}
 }
